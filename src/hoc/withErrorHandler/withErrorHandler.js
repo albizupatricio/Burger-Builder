@@ -3,26 +3,26 @@ import React, { Component } from 'react';
 import Modal from '../../components/UI/Modal/Modal';
 import Auxiliary from '../Auxiliary/Auxiliary';
 
-const withErrorHandler = (WrappedComponent, axios) => {
+const withErrorHandler = ( WrappedComponent, axios ) => {
     //Class factory (anonymous class)
     return class extends Component {
         state = {
             error: null
         }
 
-        componentWillMount() {
-            this.reqInterceptor = axios.interceptors.request.use(req => {
-                this.setState({ error: null });
+        componentWillMount () {
+            this.reqInterceptor = axios.interceptors.request.use( req => {
+                this.setState( { error: null } );
                 return req;
-            });
-            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
-                this.setState({ error: error });
-            });
+            } );
+            this.resInterceptor = axios.interceptors.response.use( res => res, error => {
+                this.setState( { error: error } );
+            } );
         }
 
-        componentWillUnmount(){
+        componentWillUnmount() {
             axios.interceptors.request.eject(this.reqInterceptor);
-            axios.interceptors.request.eject(this.resInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
         }
 
         errorConfirmedHandler = () => {
